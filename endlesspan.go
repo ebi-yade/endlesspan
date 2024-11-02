@@ -10,7 +10,7 @@ import (
 
 const doc = "endlesspan detects missing span.End() calls in OpenTelemetry tracing spans."
 
-// Analyzer is ...
+// Analyzer detects missing span.End() calls in OpenTelemetry tracing spans.
 var Analyzer = &analysis.Analyzer{
 	Name: "endlesspan",
 	Doc:  doc,
