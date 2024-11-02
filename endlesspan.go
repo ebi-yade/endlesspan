@@ -8,7 +8,7 @@ import (
 	"golang.org/x/tools/go/ast/inspector"
 )
 
-const doc = "endlesspan is ..."
+const doc = "endlesspan detects missing span.End() calls in OpenTelemetry tracing spans."
 
 // Analyzer is ...
 var Analyzer = &analysis.Analyzer{
@@ -21,13 +21,13 @@ var Analyzer = &analysis.Analyzer{
 }
 
 func run(pass *analysis.Pass) (any, error) {
-	inspect := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
+	ins := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
 
 	nodeFilter := []ast.Node{
 		(*ast.Ident)(nil),
 	}
 
-	inspect.Preorder(nodeFilter, func(n ast.Node) {
+	ins.Preorder(nodeFilter, func(n ast.Node) {
 		switch n := n.(type) {
 		case *ast.Ident:
 			if n.Name == "gopher" {

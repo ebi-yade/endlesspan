@@ -1,2 +1,3 @@
 # endlesspan
-OpenTelemetry span の End 忘れ検知
+
+Detects missing span.End() calls in OpenTelemetry tracing spans.
