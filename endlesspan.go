@@ -11,7 +11,6 @@ import (
 	"github.com/gostaticanalysis/comment/passes/commentmap"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/passes/buildssa"
-	"golang.org/x/tools/go/packages"
 	"golang.org/x/tools/go/ssa"
 )
 
@@ -32,15 +31,16 @@ var Analyzer = &analysis.Analyzer{
 }
 
 func run(pass *analysis.Pass) (any, error) {
-	config := &packages.Config{
-		Mode: packages.NeedTypes | packages.NeedDeps,
-	}
-	pkgs, err := packages.Load(config, importPath)
-	if err != nil {
-		return nil, err
-	}
-	spanType := types.NewPointer(pkgs[0].Types.Scope().Lookup("Span").Type())
-	
+	spanType := analysisutil.TypeOf(pass, importPath, "Span")
+	//config := &packages.Config{
+	//	Mode: packages.NeedTypes | packages.NeedDeps,
+	//}
+	//pkgs, err := packages.Load(config, importPath)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//spanType := types.NewPointer(pkgs[0].Types.Scope().Lookup("Span").Type())
+
 	endMethod := analysisutil.MethodOf(spanType, "End")
 
 	funcs := pass.ResultOf[buildssa.Analyzer].(*buildssa.SSA).SrcFuncs
