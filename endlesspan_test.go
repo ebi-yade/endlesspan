@@ -3,8 +3,7 @@ package endlesspan_test
 import (
 	"testing"
 
-	"endlesspan"
-
+	"github.com/ebi-yade/endlesspan"
 	"github.com/gostaticanalysis/testutil"
 	"golang.org/x/tools/go/analysis/analysistest"
 )
