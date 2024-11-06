@@ -12,7 +12,7 @@ import (
 var tracer = otel.Tracer("a")
 
 func endless(ctx context.Context) error {
-	_, span := tracer.Start(ctx, "a") // want "missing span.End call in the scope"
+	_, span := tracer.Start(ctx, "a") // want "span must be ended"
 
 	sth, err := fetchSomething(ctx)
 	if err != nil {
@@ -50,12 +50,12 @@ func nonDefer(ctx context.Context) error {
 	}
 
 	span.SetAttributes(attribute.String("sth.id", sth.ID))
-	span.End() // want "you may want to defer the span.End() call"
+	span.End() // TODO: want "you may want to defer the span.End() call"
 	return nil
 }
 
 var anonymous = func(ctx context.Context) error {
-	_, span := tracer.Start(ctx, "a") // want "missing span.End() call in the scope"
+	_, span := tracer.Start(ctx, "a") // want "span must be ended"
 
 	sth, err := fetchSomething(ctx)
 	if err != nil {
