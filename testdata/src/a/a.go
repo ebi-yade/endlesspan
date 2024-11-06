@@ -12,7 +12,7 @@ import (
 var tracer = otel.Tracer("a")
 
 func endless(ctx context.Context) error {
-	_, span := tracer.Start(ctx, "a") // want "missing span.End() call in the scope"
+	_, span := tracer.Start(ctx, "a") // want "missing span.End call in the scope"
 
 	sth, err := fetchSomething(ctx)
 	if err != nil {
